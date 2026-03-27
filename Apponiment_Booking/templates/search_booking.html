@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Bookings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/my_bookings">My Bookings</a>
+            <a href="/admin">Admin</a>
+        </div>
+
+        <h2>View My Bookings</h2>
+        <p>Enter phone number</p>
+
+        <form action="/my_bookings" method="GET">
+            <div class="form-group">
+                <input type="tel" name="phone" placeholder="10 digit phone" required pattern="[0-9]{10}">
+            </div>
+            <button type="submit" class="btn">View Bookings</button>
+        </form>
+    </div>
+</body>
+</html>

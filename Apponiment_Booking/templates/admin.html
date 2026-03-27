@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <a href="/">Back to Home</a>
+
+        <h2>Add Hospital</h2>
+        <div class="form-section">
+            <form method="POST" action="/admin/add_hospital">
+                <input type="text" name="name" placeholder="Hospital Name" required>
+                <input type="text" name="location" placeholder="Location" required>
+                <button type="submit" class="btn btn-success">Add</button>
+            </form>
+        </div>
+
+        <h3>All Hospitals ({{ hospitals|length }})</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+            {% for hospital in hospitals %}
+            <tr>
+                <td>{{ hospital.name }}</td>
+                <td>{{ hospital.location }}</td>
+                <td>
+                    <a href="/admin/delete_hospital/{{ hospital._id }}" 
+                       onclick="return confirm('Delete this hospital?')" 
+                       style="color: #fc230b; text-decoration: none; font-weight: 600;">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Add Doctor</h2>
+        <div class="form-section">
+            <form method="POST" action="/admin/add_doctor">
+                <select name="hospital_id" required>
+                    <option value="">Select Hospital</option>
+                    {% for hospital in hospitals %}
+                    <option value="{{ hospital._id }}">{{ hospital.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" name="name" placeholder="Doctor Name" required>
+                <input type="text" name="specialization" placeholder="Specialization" required>
+                <input type="number" name="fee" placeholder="Fee" required>
+                <button type="submit" class="btn btn-success">Add</button>
+            </form>
+        </div>
+
+        <h3>All Doctors ({{ doctors|length }})</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Specialization</th>
+                <th>Fee</th>
+                <th>Action</th>
+            </tr>
+            {% for doctor in doctors %}
+            <tr>
+                <td>Dr. {{ doctor.name }}</td>
+                <td>{{ doctor.specialization }}</td>
+                <td>₹{{ doctor.fee }}</td>
+                <td>
+                    <a href="/admin/delete_doctor/{{ doctor._id }}" 
+                       onclick="return confirm('Delete this doctor?')" 
+                       style="color: #f51d05; text-decoration: none; font-weight: 600;">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Add Time Slot</h2>
+        <div class="form-section">
+            <form method="POST" action="/admin/add_slot">
+                <select name="doctor_id" required>
+                    <option value="">Select Doctor</option>
+                    {% for doctor in doctors %}
+                    <option value="{{ doctor._id }}">Dr. {{ doctor.name }}</option>
+                    {% endfor %}
+                </select>
+                <input type="date" name="date" required>
+                <input type="time" name="time" required>
+                <button type="submit" class="btn btn-success">Add</button>
+            </form>
+        </div>
+
+        <h2>All Time Slots</h2>
+       <h2>All Bookings ({{ bookings|length }})</h2>
+        <table>
+            <tr>
+                <th>Patient</th>
+                <th>Phone</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Paid</th>
+                <th>Action</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.patient_name }}</td>
+                <td>{{ booking.phone }}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.time }}</td>
+                <td>₹{{ booking.amount }}</td>
+                <td>
+                    <a href="/admin/delete_booking/{{ booking._id }}" 
+                       onclick="return confirm('Cancel this booking? Slot will become available again.')" 
+                       style="color: #f92008; text-decoration: none; font-weight: 600;">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <h2>All Bookings ({{ bookings|length }})</h2>
+        <table>
+            <tr>
+                <th>Patient</th>
+                <th>Phone</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Paid</th>
+            </tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.patient_name }}</td>
+                <td>{{ booking.phone }}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.time }}</td>
+                <td>₹{{ booking.amount }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

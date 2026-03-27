@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Appointment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/my_bookings">My Bookings</a>
+            <a href="/admin">Admin</a>
+        </div>
+
+        <h2>Book Appointment</h2>
+
+        <div class="warning-box">
+            <p><strong>Doctor:</strong> Dr. {{ doctor.name }}</p>
+            <p><strong>Hospital:</strong> {{ hospital.name }}</p>
+            <p><strong>Date:</strong> {{ slot.date }}</p>
+            <p><strong>Time:</strong> {{ slot.time }}</p>
+            <p><strong>Min Fee:</strong> ₹{{ doctor.fee }}</p>
+        </div>
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Patient Name:</label>
+                <input type="text" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number:</label>
+                <input type="tel" name="phone" required pattern="[0-9]{10}">
+            </div>
+
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="number" name="age" required min="1" max="120">
+            </div>
+
+            <div class="form-group">
+                <label>Problem:</label>
+                <textarea name="problem" required rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Payment (Min ₹{{ doctor.fee }}):</label>
+                <input type="number" name="amount" required min="{{ doctor.fee }}" value="{{ doctor.fee }}">
+            </div>
+
+            <button type="submit" class="btn btn-success">Confirm & Pay</button>
+        </form>
+    </div>
+</body>
+</html>

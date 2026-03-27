@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/my_bookings">My Bookings</a>
+            <a href="/admin">Admin</a>
+        </div>
+
+        <h1>{{ hospital.name }}</h1>
+        <p><strong>Location:</strong> {{ hospital.location }}</p>
+
+        <h2>Available Doctors</h2>
+
+        {% if doctors %}
+            {% for doctor in doctors %}
+            <div class="box">
+                <h3>Dr. {{ doctor.name }}</h3>
+                <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+                <p><strong>Fee:</strong> <span class="fee">₹{{ doctor.fee }}</span></p>
+                <a href="/doctor/{{ doctor._id }}" class="btn btn-success">Book Appointment</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No doctors available.</p>
+        {% endif %}
+
+        <br>
+        <a href="/">← Back to Hospitals</a>
+    </div>
+</body>
+</html>

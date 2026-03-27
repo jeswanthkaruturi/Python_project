@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Slot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="/">Home</a>
+            <a href="/my_bookings">My Bookings</a>
+            <a href="/admin">Admin</a>
+        </div>
+
+        <div class="info-box">
+            <h2>Dr. {{ doctor.name }}</h2>
+            <p><strong>Specialization:</strong> {{ doctor.specialization }}</p>
+            <p><strong>Hospital:</strong> {{ hospital.name }}</p>
+            <p><strong>Fee:</strong> ₹{{ doctor.fee }}</p>
+        </div>
+
+        <h3>Available Time Slots</h3>
+
+        {% if slots %}
+            {% for slot in slots %}
+            <div class="slot-box">
+                <p><strong>Date:</strong> {{ slot.date }}</p>
+                <p><strong>Time:</strong> {{ slot.time }}</p>
+                <a href="/book/{{ slot._id }}" class="btn btn-success">Book</a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No slots available.</p>
+        {% endif %}
+
+        <br><br>
+        <a href="/hospital/{{ hospital._id }}">← Back to Doctors</a>
+    </div>
+</body>
+</html>
